@@ -1,24 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect, useReducer } from "react";
 
-function App() {
+interface ppp {
+  library: string
+}
+
+function App({ library }: ppp) {
+  const [emotion, setEmotion] = useState("happy");
+  const [secondary, setSecondary] = useState("tired");
+  useEffect(() => {
+    console.log(`It's ${emotion} around here!`);
+  }, [emotion]);
+  useEffect(() => {
+    console.log(`It's ${secondary} around here!`);
+  }, [secondary]);
+  const [checked, setChecked] = useReducer(
+    (checked) => !checked,
+    false
+  );  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Current emotion is {emotion}</h1>
+      <button onClick={() => setEmotion("sad")}>
+        Sad
+      </button>
+      <button onClick={() => setEmotion("excited")}>
+        Excited
+      </button>
+      <h2>
+        Current secondary emotion is {secondary}.
+      </h2>
+      <button onClick={() => setSecondary("grateful")}>
+        Grateful
+      </button>
+      <h2>Reducer</h2>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={setChecked}
+      />
+      <label>
+        {checked ? "checked" : "not checked"}
+      </label>      
     </div>
   );
 }
